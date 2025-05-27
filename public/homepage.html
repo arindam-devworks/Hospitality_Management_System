@@ -1,693 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hospitality Management System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #6C63FF;
-            --secondary: #FF6584;
-            --accent: #42C2FF;
-            --dark: #2D3748;
-            --light: #F7FAFC;
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-        }
-
-        .logo i {
-            margin-right: 10px;
-            font-size: 28px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin-left: 30px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .auth-buttons .btn {
-            margin-left: 15px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
-        }
-
-        .btn-outline {
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 24px;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 80px;
-            background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            position: relative;
-            color: white;
-            text-align: center;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            animation: fadeInDown 1s;
-        }
-
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-            animation: fadeInUp 1s;
-        }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            animation: fadeIn 1.5s;
-        }
-
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-size: 36px;
-            color: var(--dark);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
-        }
-
-        .section-title p {
-            color: #718096;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .feature-card {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
-            border-top: 4px solid var(--primary);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(108, 99, 255, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 50px;
-            margin-bottom: 20px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-
-        .feature-card p {
-            color: #718096;
-        }
-
-        /* CTA Section */
-        .cta {
-            padding: 80px 0;
-            background: var(--gradient);
-            color: white;
-            text-align: center;
-        }
-
-        .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-
-        .cta p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta .btn {
-            background: white;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .cta .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 60px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: var(--primary);
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: #CBD5E0;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-column ul li a:hover {
-            color: var(--primary);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-links a {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #CBD5E0;
-            font-size: 14px;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 40px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 80px);
-                background: white;
-                flex-direction: column;
-                align-items: center;
-                padding: 40px 0;
-                transition: left 0.3s;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .nav-links li {
-                margin: 15px 0;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .auth-buttons {
-                display: none;
-            }
-
-            .hero {
-                padding: 120px 0 60px;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .hero p {
-                font-size: 18px;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .section-title h2 {
-                font-size: 30px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 28px;
-            }
-
-            .feature-card {
-                padding: 20px;
-            }
-
-            .cta h2 {
-                font-size: 28px;
-            }
-        }
-    </style>
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <meta name="description" content="Smart Hospitality Management System - Hotel Recommendations, Secure Bookings, and AI-powered features for seamless experiences.">
+    <meta name="keywords" content="hotel, hospitality, booking, AI, management, food, beverage, secure payment">
+    <meta name="author" content="HospitalityPro">
+    <link rel="icon" type="image/png" href="/Image/favicon.png">
+    <link rel="stylesheet" href="homepage.css">
+  </head>
+  <body>
     <!-- Header -->
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <i class="fas fa-hotel"></i>
-                    <span>Hospitality</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="homepage.html">Home</a></li>
-                    <li><a href="hotel.html">Hotels</a></li>
-                    <li><a href="securepayment.html">Secure Payment</a></li>
-                    <li><a href="checkIn.html">Check-in/out</a></li>
-                    <li><a href="food&beverage.html">Food&Beverage</a></li>
-                    <!-- <li><a href="Ai.html">AI-Assistance</a></li> -->
-                    <!-- <li><a href="#">About</a></li> -->
-                </ul>
-                <div class="auth-buttons">
-                    <a href="login.html" class="btn btn-outline">Login</a>
-                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
-                </div>
-                <div class="hamburger">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </nav>
-        </div>
+      <div class="container">
+        <nav>
+          <div class="logo">
+            <i class="fas fa-hotel"></i>
+            <span>Hospitality</span>
+          </div>
+          <ul class="nav-links" id="main-nav-links">
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="hotels.html">Hotels</a></li>
+            <li><a href="checkIn.html">Check-in/out</a></li>
+            <li><a href="food&beverage.html">Food&Beverage</a></li>
+            <li><a href="#" aria-label="About">About</a></li>
+            <!-- <li><a href="dashboard.html">Dashboard</a></li> -->
+          </ul>
+          <div class="auth-buttons">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="signup.html" class="btn btn-primary">Sign Up</a>
+          </div>
+          <div class="hamburger">
+            <i class="fas fa-bars"></i>
+          </div>
+        </nav>
+      </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Smart Hospitality Management System</h1>
-                <p>Hotel Recommendations, Secure Bookings & Facial Recognition Check-in for a seamless experience</p>
-                <div class="hero-buttons">
-                    <a href="hotel.html" class="btn btn-primary">Explore Hotels</a>
-                    <a href="#" class="btn btn-outline">Learn More</a>
-                </div>
-            </div>
+      <div class="container">
+        <div class="hero-content">
+          <h1>Smart Hospitality Management System</h1>
+          <p>
+            Hotel Recommendations, Secure Bookings & Facial Recognition Check-in
+            for a seamless experience
+          </p>
+          <div class="hero-buttons">
+            <a href="hotels.html" class="btn btn-primary">Explore Hotels</a>
+            <a href="#" class="btn btn-outline">Learn More</a>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Features Section -->
     <section class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Key Features</h2>
-                <p>Discover the powerful features that make our Hospitality Management System stand out</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>Hotel Recommender</h3>
-                    <p>Get personalized hotel recommendations based on your preferences, location, and ratings.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Booking Prediction</h3>
-                    <p>Our AI predicts booking trends to help you find the best deals and availability.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <h3>Secure Payments</h3>
-                    <p>Advanced cryptography ensures your payment data is always protected and secure.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-comment-dots"></i>
-                    </div>
-                    <h3>AI Chatbot</h3>
-                    <p>24/7 virtual assistant to help with bookings, questions, and recommendations.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <h3>Facial Recognition</h3>
-                    <p>Check-in and check-out seamlessly with our facial recognition technology.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <h3>Food & Beverage</h3>
-                    <p>Order food, reserve tables, and enjoy hotel dining with our integrated system.</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Key Features</h2>
+          <p>
+            Discover the powerful features that make our Hospitality Management
+            System stand out
+          </p>
         </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-robot"></i>
+            </div>
+            <h3>Hotel Recommender</h3>
+            <p>
+              Get personalized hotel recommendations based on your preferences,
+              location, and ratings.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Booking Prediction</h3>
+            <p>
+              Our AI predicts booking trends to help you find the best deals and
+              availability.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-lock"></i>
+            </div>
+            <h3>Secure Payments</h3>
+            <p>
+              Advanced cryptography ensures your payment data is always
+              protected and secure.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-comment-dots"></i>
+            </div>
+            <h3>AI Chatbot</h3>
+            <p>
+              24/7 virtual assistant to help with bookings, questions, and
+              recommendations.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-user-circle"></i>
+            </div>
+            <h3>Facial Recognition</h3>
+            <p>
+              Check-in and check-out seamlessly with our facial recognition
+              technology.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <h3>Food & Beverage</h3>
+            <p>
+              Order food, reserve tables, and enjoy hotel dining with our
+              integrated system.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- CTA Section -->
     <section class="cta">
-        <div class="container">
-            <h2>Ready to Transform Your Hospitality Experience?</h2>
-            <p>Join thousands of satisfied customers who enjoy seamless hotel bookings, AI recommendations, and secure transactions with our platform.</p>
-            <a href="#" class="btn">Get Started Now</a>
-        </div>
+      <div class="container">
+        <h2>Ready to Transform Your Hospitality Experience?</h2>
+        <p>
+          Join thousands of satisfied customers who enjoy seamless hotel
+          bookings, AI recommendations, and secure transactions with our
+          platform.
+        </p>
+        <a href="#" class="btn">Get Started Now</a>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Hospitality</h3>
-                    <p>Revolutionizing the hospitality industry with AI-powered solutions for hotels and guests alike.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="homepage.html">Home</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Services</h3>
-                    <ul>
-                        <li><a href="#">Hotel Booking</a></li>
-                        <li><a href="#">AI Recommendations</a></li>
-                        <li><a href="#">Secure Payments</a></li>
-                        <li><a href="#">Facial Check-in</a></li>
-                        <li><a href="#">Food Ordering</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Hospitality St, Tech City</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-envelope"></i> info@hospitalitypro.com</li>
-                    </ul>
-                </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3>Hospitality</h3>
+            <p>
+              Revolutionizing the hospitality industry with AI-powered solutions
+              for hotels and guests alike.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2023 HospitalityPro. All Rights Reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-            </div>
+          </div>
+          <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="homepage.html">Home</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Features</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="#">Hotel Booking</a></li>
+              <li><a href="#">AI Recommendations</a></li>
+              <li><a href="#">Secure Payments</a></li>
+              <li><a href="#">Facial Check-in</a></li>
+              <li><a href="#">Food Ordering</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+              <li>
+                <i class="fas fa-map-marker-alt"></i> 123 Hospitality St, Tech
+                City
+              </li>
+              <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+              <li><i class="fas fa-envelope"></i> info@hospitalitypro.com</li>
+            </ul>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 HospitalityPro. All Rights Reserved. |
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+          </p>
+        </div>
+      </div>
     </footer>
 
     <script>
-        // Mobile Menu Toggle
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+      // Mobile Menu Toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
 
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            hamburger.innerHTML = navLinks.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        hamburger.innerHTML = navLinks.classList.contains("active")
+          ? '<i class="fas fa-times"></i>'
+          : '<i class="fas fa-bars"></i>';
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
         });
+      });
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+      // Animation on scroll
+      const animateOnScroll = () => {
+        const elements = document.querySelectorAll(
+          ".feature-card, .section-title"
+        );
+        elements.forEach((element) => {
+          const elementPosition = element.getBoundingClientRect().top;
+          const screenPosition = window.innerHeight / 1.3;
+
+          if (elementPosition < screenPosition) {
+            element.style.opacity = "1";
+            element.style.transform = "translateY(0)";
+          }
         });
+      };
 
-        // Animation on scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.feature-card, .section-title');
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-                
-                if(elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        };
+      // Set initial state for animation
+      document.querySelectorAll(".feature-card").forEach((card) => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(20px)";
+        card.style.transition = "all 0.6s ease";
+      });
 
-        // Set initial state for animation
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'all 0.6s ease';
-        });
+      window.addEventListener("scroll", animateOnScroll);
+      window.addEventListener("load", animateOnScroll);
 
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-
-    </script>
-
-<script src="https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js"></script>
-<script>
-  window.addEventListener("DOMContentLoaded", function() {
-    window.AgentInitializer.init({
-      rootId: "JotformAgent-0196cceccf5279ba900395056d92d6630f89",
-      formID: "0196cceccf5279ba900395056d92d6630f89",
-      queryParams: ["skipWelcome=1", "maximizable=1"],
-      domain: "https:\/\/www.jotform.com",
-      isInitialOpen: false,
-      isDraggable: false,
-      background: "linear-gradient(180deg, #035C5F 0%, #035C5F 100%)",
-      buttonBackgroundColor: "#8E1CA8",
-      buttonIconColor: "#FFFFFF",
-      variant: false,
-      customizations: {
-        greeting: "Yes",
-        greetingMessage: "Hi! How can I assist you?",
-        pulse: "Yes",
-        position: "right"
+      // Add dashboard link if user is logged in
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        const navLinks = document.getElementById('main-nav-links');
+        if (navLinks && !document.getElementById('dashboard-link')) {
+          const li = document.createElement('li');
+          li.innerHTML = '<a href="dashboard.html" id="dashboard-link">Dashboard</a>';
+          navLinks.insertBefore(li, navLinks.firstChild.nextSibling); // After Home
+        }
       }
-    });
-  });
-</script>
-
-</body>
+    </script>
+    <!-- AI Assist -->
+    <script src="https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        window.AgentInitializer.init({
+          rootId: "JotformAgent-0196cceccf5279ba900395056d92d6630f89",
+          formID: "0196cceccf5279ba900395056d92d6630f89",
+          queryParams: ["skipWelcome=1", "maximizable=1"],
+          domain: "https:\/\/www.jotform.com",
+          isInitialOpen: false,
+          isDraggable: false,
+          background: "linear-gradient(180deg, #035C5F 0%, #035C5F 100%)",
+          buttonBackgroundColor: "#8E1CA8",
+          buttonIconColor: "#FFFFFF",
+          variant: false,
+          customizations: {
+            greeting: "Yes",
+            greetingMessage: "Hi! How can I assist you?",
+            pulse: "Yes",
+            position: "right",
+          },
+        });
+      });
+    </script>
+  </body>
 </html>

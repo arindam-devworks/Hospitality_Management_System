@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const confirmPassword = document.getElementById('confirm-password').value;
 
             if (password !== confirmPassword) {
-                alert('Passwords do not match!');
+                console.log('Passwords do not match!');
                 return;
             }
 
@@ -74,14 +74,14 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                alert(data.message);
+                console.log(data.message);
                 if (data.message === 'Signup successful') {
                     window.location.href = './login.html';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Signup failed. Please try again.');
+                console.log('Signup failed. Please try again.');
             });
         });
     }
@@ -103,15 +103,15 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.message === 'Login successful') {
-                    alert('Login successful! Redirecting to dashboard...');
+                    console.log('Login successful! Redirecting to dashboard...');
                     window.location.href = './homepage.html';
                 } else {
-                    alert(data.message);
+                    console.log(data.message);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Login failed. Please try again.');
+                console.log('Login failed. Please try again.');
             });
         });
     }
