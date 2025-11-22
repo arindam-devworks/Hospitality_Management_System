@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard | HospitalityPro</title>
+  <link rel="icon" type="image/png" href="/Image/favicon.png">
+  <link rel="stylesheet" href="homepage.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <i class="fas fa-hotel"></i>
+          <span>Hospitality</span>
+        </div>
+        <ul class="nav-links" id="main-nav-links">
+          <li><a href="homepage.html">Home</a></li>
+          <li><a href="hotels.html">Hotels</a></li>
+          <li><a href="checkIn.html">Check-in/out</a></li>
+          <li><a href="food&beverage.html">Food&Beverage</a></li>
+          <li><a href="#" aria-label="About">About</a></li>
+          <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        </ul>
+        <div class="auth-buttons" id="auth-buttons">
+          <a href="login.html" class="btn btn-outline">Login</a>
+          <a href="signup.html" class="btn btn-primary">Sign Up</a>
+        </div>
+        <div class="user-info" id="user-info" style="display:none;"></div>
+        <div class="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main style="padding-top:120px;">
+    <div class="container">
+      <h1>User Dashboard</h1>
+      <div id="dashboard-content">
+        <div id="loading" style="display:none;text-align:center;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+        <div id="user-summary"></div>
+        <div id="recent-bookings"></div>
+      </div>
+    </div>
+  </main>
+  <script>
+    const user = JSON.parse(localStorage.getItem('user'));
+    const authButtons = document.getElementById('auth-buttons');
+    const userInfo = document.getElementById('user-info');
+    const loading = document.getElementById('loading');
+    const summaryDiv = document.getElementById('user-summary');
+    const bookingsDiv = document.getElementById('recent-bookings');
+    if (!user) {
+      authButtons.style.display = 'block';
+      userInfo.style.display = 'none';
+      document.getElementById('dashboard-content').innerHTML = '<p>Please <a href="login.html">login</a> to view your dashboard.</p>';
+    } else {
+      authButtons.style.display = 'none';
+      userInfo.style.display = 'block';
+      userInfo.innerHTML = `<span>Welcome, ${user.fullname || user.email}</span> <a href="#" id="logout" class="btn btn-outline" style="margin-left:10px;">Logout</a>`;
+      document.getElementById('logout').onclick = function() {
+        localStorage.removeItem('user');
+        window.location.href = 'homepage.html';
+      };
+      loadDashboard();
+    }
+    async function loadDashboard() {
+      loading.style.display = 'block';
+      summaryDiv.innerHTML = '';
+      bookingsDiv.innerHTML = '';
+      try {
+        // Fetch bookings
+        const res = await fetch('http://localhost:3000/api/user/bookings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: user.email })
+        });
+        const bookings = await res.json();
+        loading.style.display = 'none';
+        // User summary
+        let summaryHtml = `<h2>Account Info</h2><ul><li><strong>Name:</strong> ${user.fullname || '-'}</li><li><strong>Email:</strong> ${user.email}</li></ul>`;
+        summaryDiv.innerHTML = summaryHtml;
+        // Recent bookings
+        let html = '<h2>Recent Bookings</h2>';
+        if (!bookings || bookings.length === 0) {
+          html += '<p>No bookings found.</p>';
+        } else {
+          html += '<table style="width:100%;margin-top:20px;"><thead><tr><th>ID</th><th>Hotel</th><th>Check-in</th><th>Check-out</th><th>Status</th></tr></thead><tbody>';
+          bookings.slice(0, 5).forEach(b => {
+            html += `<tr><td>${b.id}</td><td>${b.hotel_name || b.hotel || ''}</td><td>${b.checkin || b.check_in || ''}</td><td>${b.checkout || b.check_out || ''}</td><td>${b.status}</td></tr>`;
+          });
+          html += '</tbody></table>';
+        }
+        bookingsDiv.innerHTML = html;
+      } catch (err) {
+        loading.style.display = 'none';
+        summaryDiv.innerHTML = '';
+        bookingsDiv.innerHTML = '<p>Error loading dashboard. Please try again later.</p>';
+      }
+    }
+  </script>
+</body>
+</html> 

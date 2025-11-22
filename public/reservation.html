@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hospitality | Reservations</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #5a67d8;
+        --secondary: #7f9cf5;
+        --accent: #ff6b81;
+        --dark: #2d3748;
+        --light: #f7fafc;
+        --success: #48bb78;
+        --warning: #f6e05e;
+        --danger: #f56565;
+        --gradient: linear-gradient(135deg, #5a67d8, #7f9cf5);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: var(--light);
+        color: var(--dark);
+        scroll-behavior: smooth;
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+        padding: 15px 20px;
+      }
+
+      .header-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+      }
+
+      .logo i {
+        margin-right: 10px;
+        color: var(--accent);
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 30px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.3s ease;
+      }
+
+      nav ul li a:hover,
+      nav ul li a.active {
+        color: var(--primary);
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: none;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .btn-primary {
+        background: var(--gradient);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #4c51bf, #6b7280);
+        transform: translateY(-2px);
+      }
+
+      .hamburger {
+        display: none;
+        font-size: 24px;
+        background: none;
+        border: none;
+        color: var(--dark);
+        cursor: pointer;
+      }
+
+      main {
+        padding-top: 100px;
+      }
+
+      .section-title {
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--dark);
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 2px;
+      }
+
+      /* Dashboard Cards */
+      .dashboard-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .card-header h3 {
+        font-size: 1.1rem;
+        color: var(--dark);
+      }
+
+      .card-header i {
+        font-size: 1.5rem;
+        color: var(--primary);
+      }
+
+      .card-body h2 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 5px;
+      }
+
+      .card-body p {
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      /* Tabs Navigation */
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+      }
+
+      .tab.active {
+        border-bottom: 3px solid var(--primary);
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .tab:hover:not(.active) {
+        border-bottom: 3px solid var(--secondary);
+      }
+
+      /* Tab Content */
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Reservation Form */
+      .reservation-form {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px;
+      }
+
+      .form-group {
+        flex: 0 0 calc(50% - 30px);
+        margin: 0 15px 20px;
+      }
+
+      .form-group.full-width {
+        flex: 0 0 calc(100% - 30px);
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .submit-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+      }
+
+      .submit-btn:hover {
+        background: var(--secondary);
+      }
+
+      /* Reservations Table */
+      .reservations-table {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+
+      .status {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+
+      .status.confirmed {
+        background-color: #c6f6d5;
+        color: #22543d;
+      }
+
+      .status.pending {
+        background-color: #feebc8;
+        color: #744210;
+      }
+
+      .status.cancelled {
+        background-color: #fed7d7;
+        color: #742a2a;
+      }
+
+      .action-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+      }
+
+      .edit-btn {
+        background-color: #bee3f8;
+        color: #2b6cb0;
+        margin-right: 5px;
+      }
+
+      .edit-btn:hover {
+        background-color: #90cdf4;
+      }
+
+      .cancel-btn {
+        background-color: #fed7d7;
+        color: #c53030;
+      }
+
+      .cancel-btn:hover {
+        background-color: #feb2b2;
+      }
+
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 600px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        animation: modalFadeIn 0.3s;
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .modal-header h2 {
+        color: var(--primary);
+      }
+
+      .close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6c757d;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .dashboard-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .form-group {
+          flex: 0 0 calc(100% - 30px);
+        }
+
+        nav ul {
+          display: none;
+        }
+
+        .hamburger {
+          display: block;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .tabs {
+          flex-wrap: wrap;
+        }
+
+        .tab {
+          flex: 1 0 auto;
+          text-align: center;
+          padding: 8px 10px;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <a href="#" class="logo">
+          <i class="fas fa-hotel"></i>
+          <span>Hospitality</span>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="food&beverage.html">Menu</a></li>
+            <li><a href="#">Room Service</a></li>
+            <li><a href="#" class="active">Reservations</a></li>
+          </ul>
+        </nav>
+        <button class="hamburger">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <div class="card-header">
+              <h3>Today's Reservations</h3>
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="card-body">
+              <h2>24</h2>
+              <p>+5 from yesterday</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Active Reservations</h3>
+              <i class="fas fa-concierge-bell"></i>
+            </div>
+            <div class="card-body">
+              <h2>18</h2>
+              <p>Currently checked-in</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Upcoming Reservations</h3>
+              <i class="fas fa-calendar-day"></i>
+            </div>
+            <div class="card-body">
+              <h2>32</h2>
+              <p>Next 7 days</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reservation Form -->
+        <div class="reservation-form">
+          <h2 class="section-title">New Reservation</h2>
+          <form id="reservationForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guestName">Guest Name</label>
+                <input
+                  type="text"
+                  id="guestName"
+                  class="form-control"
+                  placeholder="Enter guest name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="contactNumber">Contact Number</label>
+                <input
+                  type="tel"
+                  id="contactNumber"
+                  class="form-control"
+                  placeholder="Enter contact number"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  placeholder="Enter email address"
+                />
+              </div>
+              <div class="form-group">
+                <label for="roomType">Room Type</label>
+                <select id="roomType" class="form-control" required>
+                  <option value="">Select room type</option>
+                  <option value="standard">Standard Room</option>
+                  <option value="deluxe">Deluxe Room</option>
+                  <option value="suite">Suite</option>
+                  <option value="executive">Executive Suite</option>
+                  <option value="presidential">Presidential Suite</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="checkInDate">Check-in Date</label>
+                <input
+                  type="date"
+                  id="checkInDate"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="checkOutDate">Check-out Date</label>
+                <input
+                  type="date"
+                  id="checkOutDate"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="adults">Adults</label>
+                <select id="adults" class="form-control" required>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="children">Children</label>
+                <select id="children" class="form-control">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label for="specialRequests">Special Requests</label>
+                <textarea
+                  id="specialRequests"
+                  class="form-control"
+                  rows="3"
+                  placeholder="Any special requests?"
+                ></textarea>
+              </div>
+            </div>
+            <button type="submit" class="submit-btn">Create Reservation</button>
+          </form>
+        </div>
+
+        <!-- Reservations Table -->
+        <div class="reservations-table">
+          <h2 class="section-title">Current Reservations</h2>
+          <div class="table-responsive">
+            <table id="reservationsTable">
+              <thead>
+                <tr>
+                  <th>Reservation ID</th>
+                  <th>Guest Name</th>
+                  <th>Room Type</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Sample data - will be populated by JavaScript -->
+                <tr>
+                  <td>RES-1001</td>
+                  <td>John Smith</td>
+                  <td>Deluxe Room</td>
+                  <td>2023-06-15</td>
+                  <td>2023-06-20</td>
+                  <td><span class="status confirmed">Confirmed</span></td>
+                  <td>
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn cancel-btn">Cancel</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>RES-1002</td>
+                  <td>Sarah Johnson</td>
+                  <td>Executive Suite</td>
+                  <td>2023-06-18</td>
+                  <td>2023-06-25</td>
+                  <td><span class="status confirmed">Confirmed</span></td>
+                  <td>
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn cancel-btn">Cancel</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>RES-1003</td>
+                  <td>Michael Brown</td>
+                  <td>Standard Room</td>
+                  <td>2023-06-20</td>
+                  <td>2023-06-22</td>
+                  <td><span class="status pending">Pending</span></td>
+                  <td>
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn cancel-btn">Cancel</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>RES-1004</td>
+                  <td>Emily Davis</td>
+                  <td>Suite</td>
+                  <td>2023-06-22</td>
+                  <td>2023-06-28</td>
+                  <td><span class="status confirmed">Confirmed</span></td>
+                  <td>
+                    <button class="action-btn edit-btn">Edit</button>
+                    <button class="action-btn cancel-btn">Cancel</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Edit Reservation Modal -->
+    <div class="modal" id="editModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Reservation</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <form id="editReservationForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="editGuestName">Guest Name</label>
+              <input
+                type="text"
+                id="editGuestName"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="editContactNumber">Contact Number</label>
+              <input
+                type="tel"
+                id="editContactNumber"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="editRoomType">Room Type</label>
+              <select id="editRoomType" class="form-control" required>
+                <option value="standard">Standard Room</option>
+                <option value="deluxe">Deluxe Room</option>
+                <option value="suite">Suite</option>
+                <option value="executive">Executive Suite</option>
+                <option value="presidential">Presidential Suite</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editCheckInDate">Check-in Date</label>
+              <input
+                type="date"
+                id="editCheckInDate"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="editCheckOutDate">Check-out Date</label>
+              <input
+                type="date"
+                id="editCheckOutDate"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group full-width">
+              <label for="editSpecialRequests">Special Requests</label>
+              <textarea
+                id="editSpecialRequests"
+                class="form-control"
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+          <button type="submit" class="submit-btn">Update Reservation</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Sample reservation data
+      let reservations = [
+        {
+          id: "RES-1001",
+          guestName: "John Smith",
+          contactNumber: "+1 555-123-4567",
+          email: "john.smith@example.com",
+          roomType: "deluxe",
+          checkInDate: "2023-06-15",
+          checkOutDate: "2023-06-20",
+          adults: 2,
+          children: 1,
+          specialRequests: "Need early check-in at 12 PM",
+          status: "confirmed",
+        },
+        {
+          id: "RES-1002",
+          guestName: "Sarah Johnson",
+          contactNumber: "+1 555-987-6543",
+          email: "sarah.j@example.com",
+          roomType: "executive",
+          checkInDate: "2023-06-18",
+          checkOutDate: "2023-06-25",
+          adults: 2,
+          children: 0,
+          specialRequests: "Anniversary celebration, please arrange flowers",
+          status: "confirmed",
+        },
+        {
+          id: "RES-1003",
+          guestName: "Michael Brown",
+          contactNumber: "+1 555-456-7890",
+          email: "michael.b@example.com",
+          roomType: "standard",
+          checkInDate: "2023-06-20",
+          checkOutDate: "2023-06-22",
+          adults: 1,
+          children: 0,
+          specialRequests: "",
+          status: "pending",
+        },
+        {
+          id: "RES-1004",
+          guestName: "Emily Davis",
+          contactNumber: "+1 555-789-0123",
+          email: "emily.d@example.com",
+          roomType: "suite",
+          checkInDate: "2023-06-22",
+          checkOutDate: "2023-06-28",
+          adults: 2,
+          children: 2,
+          specialRequests: "Connecting rooms preferred",
+          status: "confirmed",
+        },
+      ];
+
+      // DOM Elements
+      const reservationForm = document.getElementById("reservationForm");
+      const reservationsTable = document.getElementById("reservationsTable");
+      const editModal = document.getElementById("editModal");
+      const closeModal = document.querySelector(".close-modal");
+      const editReservationForm = document.getElementById(
+        "editReservationForm"
+      );
+      const hamburger = document.querySelector(".hamburger");
+      const nav = document.querySelector("nav ul");
+
+      // Initialize the page
+      function init() {
+        renderReservations();
+        setupEventListeners();
+      }
+
+      // Render reservations table
+      function renderReservations() {
+        const tbody = reservationsTable.querySelector("tbody");
+        tbody.innerHTML = "";
+
+        reservations.forEach((reservation) => {
+          const row = document.createElement("tr");
+
+          // Format dates for display
+          const checkInDate = new Date(
+            reservation.checkInDate
+          ).toLocaleDateString();
+          const checkOutDate = new Date(
+            reservation.checkOutDate
+          ).toLocaleDateString();
+
+          // Format room type for display
+          const roomTypeMap = {
+            standard: "Standard Room",
+            deluxe: "Deluxe Room",
+            suite: "Suite",
+            executive: "Executive Suite",
+            presidential: "Presidential Suite",
+          };
+
+          // Status class and text
+          const statusClass =
+            reservation.status === "confirmed"
+              ? "confirmed"
+              : reservation.status === "pending"
+              ? "pending"
+              : "cancelled";
+          const statusText =
+            reservation.status.charAt(0).toUpperCase() +
+            reservation.status.slice(1);
+
+          row.innerHTML = `
+                    <td>${reservation.id}</td>
+                    <td>${reservation.guestName}</td>
+                    <td>${roomTypeMap[reservation.roomType]}</td>
+                    <td>${checkInDate}</td>
+                    <td>${checkOutDate}</td>
+                    <td><span class="status ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <button class="action-btn edit-btn" data-id="${
+                          reservation.id
+                        }">Edit</button>
+                        <button class="action-btn cancel-btn" data-id="${
+                          reservation.id
+                        }">Cancel</button>
+                    </td>
+                `;
+
+          tbody.appendChild(row);
+        });
+      }
+
+      // Handle new reservation form submission
+      function handleReservationSubmit(e) {
+        e.preventDefault();
+
+        // Get form values
+        const guestName = document.getElementById("guestName").value;
+        const contactNumber = document.getElementById("contactNumber").value;
+        const email = document.getElementById("email").value;
+        const roomType = document.getElementById("roomType").value;
+        const checkInDate = document.getElementById("checkInDate").value;
+        const checkOutDate = document.getElementById("checkOutDate").value;
+        const adults = document.getElementById("adults").value;
+        const children = document.getElementById("children").value;
+        const specialRequests =
+          document.getElementById("specialRequests").value;
+
+        // Generate new reservation ID
+        const newId = `RES-${1000 + reservations.length + 1}`;
+
+        // Create new reservation object
+        const newReservation = {
+          id: newId,
+          guestName,
+          contactNumber,
+          email,
+          roomType,
+          checkInDate,
+          checkOutDate,
+          adults: parseInt(adults),
+          children: parseInt(children),
+          specialRequests,
+          status: "confirmed",
+        };
+
+        // Add to reservations array
+        reservations.unshift(newReservation);
+
+        // Update table
+        renderReservations();
+
+        // Reset form
+        reservationForm.reset();
+
+        // Show success message
+        alert("Reservation created successfully!");
+      }
+
+      // Handle edit reservation
+      function handleEditReservation(reservationId) {
+        // Find the reservation
+        const reservation = reservations.find((r) => r.id === reservationId);
+        if (!reservation) return;
+
+        // Populate the edit form
+        document.getElementById("editGuestName").value = reservation.guestName;
+        document.getElementById("editContactNumber").value =
+          reservation.contactNumber;
+        document.getElementById("editRoomType").value = reservation.roomType;
+        document.getElementById("editCheckInDate").value =
+          reservation.checkInDate;
+        document.getElementById("editCheckOutDate").value =
+          reservation.checkOutDate;
+        document.getElementById("editSpecialRequests").value =
+          reservation.specialRequests;
+
+        // Store the reservation ID in the form
+        editReservationForm.dataset.id = reservationId;
+
+        // Show the modal
+        editModal.style.display = "flex";
+      }
+
+      // Handle edit form submission
+      function handleEditFormSubmit(e) {
+        e.preventDefault();
+
+        const reservationId = editReservationForm.dataset.id;
+        const reservation = reservations.find((r) => r.id === reservationId);
+        if (!reservation) return;
+
+        // Update reservation with form values
+        reservation.guestName = document.getElementById("editGuestName").value;
+        reservation.contactNumber =
+          document.getElementById("editContactNumber").value;
+        reservation.roomType = document.getElementById("editRoomType").value;
+        reservation.checkInDate =
+          document.getElementById("editCheckInDate").value;
+        reservation.checkOutDate =
+          document.getElementById("editCheckOutDate").value;
+        reservation.specialRequests = document.getElementById(
+          "editSpecialRequests"
+        ).value;
+
+        // Update table
+        renderReservations();
+
+        // Close modal
+        editModal.style.display = "none";
+
+        // Show success message
+        alert("Reservation updated successfully!");
+      }
+
+      // Handle cancel reservation
+      function handleCancelReservation(reservationId) {
+        if (!confirm("Are you sure you want to cancel this reservation?"))
+          return;
+
+        // Find the reservation
+        const reservation = reservations.find((r) => r.id === reservationId);
+        if (!reservation) return;
+
+        // Update status
+        reservation.status = "cancelled";
+
+        // Update table
+        renderReservations();
+
+        // Show success message
+        alert("Reservation cancelled successfully!");
+      }
+
+      // Setup event listeners
+      function setupEventListeners() {
+        // New reservation form submission
+        reservationForm.addEventListener("submit", handleReservationSubmit);
+
+        // Edit form submission
+        editReservationForm.addEventListener("submit", handleEditFormSubmit);
+
+        // Close modal button
+        closeModal.addEventListener("click", () => {
+          editModal.style.display = "none";
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener("click", (e) => {
+          if (e.target === editModal) {
+            editModal.style.display = "none";
+          }
+        });
+
+        // Table button events (delegated)
+        reservationsTable.addEventListener("click", (e) => {
+          const editBtn = e.target.closest(".edit-btn");
+          const cancelBtn = e.target.closest(".cancel-btn");
+
+          if (editBtn) {
+            const reservationId = editBtn.dataset.id;
+            handleEditReservation(reservationId);
+          }
+
+          if (cancelBtn) {
+            const reservationId = cancelBtn.dataset.id;
+            handleCancelReservation(reservationId);
+          }
+        });
+
+        // Hamburger menu toggle
+        hamburger.addEventListener("click", () => {
+          nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+        });
+
+        // Set default dates in forms
+        const today = new Date();
+        const tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+
+        document.getElementById("checkInDate").valueAsDate = today;
+        document.getElementById("checkOutDate").valueAsDate = tomorrow;
+        document.getElementById("editCheckInDate").valueAsDate = today;
+        document.getElementById("editCheckOutDate").valueAsDate = tomorrow;
+      }
+
+      // Initialize the application
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
+  </body>
+</html>

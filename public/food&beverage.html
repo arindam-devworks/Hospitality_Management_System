@@ -1,1280 +1,1432 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hospitality | Food & Beverage</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --accent: #fd79a8;
-            --dark: #2d3436;
-            --light: #f5f6fa;
-            --success: #00b894;
-            --warning: #fdcb6e;
-            --danger: #d63031;
+      :root {
+        --primary: #5a67d8;
+        --secondary: #7f9cf5;
+        --accent: #ff6b81;
+        --dark: #2d3748;
+        --light: #f7fafc;
+        --success: #48bb78;
+        --warning: #f6e05e;
+        --danger: #f56565;
+        --gradient: linear-gradient(135deg, #5a67d8, #7f9cf5);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: var(--light);
+        color: var(--dark);
+        scroll-behavior: smooth;
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+      }
+
+      .header-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+      }
+
+      .logo i {
+        margin-right: 10px;
+        color: var(--accent);
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+      }
+
+      nav ul li {
+        margin-left: 30px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 500;
+        font-size: 16px;
+        transition: color 0.3s ease;
+      }
+
+      nav ul li a:hover,
+      nav ul li a.active {
+        color: var(--primary);
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: none;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .btn-outline {
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        background: transparent;
+      }
+
+      .btn-outline:hover {
+        background: var(--primary);
+        color: white;
+      }
+
+      .btn-primary {
+        background: var(--gradient);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #4c51bf, #6b7280);
+        transform: translateY(-2px);
+      }
+
+      .hamburger {
+        display: none;
+        font-size: 24px;
+        background: none;
+        border: none;
+        color: var(--dark);
+        cursor: pointer;
+      }
+
+      main {
+        padding-top: 100px; /* Adjusted to account for fixed header height */
+      }
+
+      .section-title {
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--dark);
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 2px;
+      }
+
+      /* Dashboard Cards */
+      .dashboard-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .card-header h3 {
+        font-size: 1.1rem;
+        color: var(--dark);
+      }
+
+      .card-header i {
+        font-size: 1.5rem;
+        color: var(--primary);
+      }
+
+      .card-body h2 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 5px;
+      }
+
+      .card-body p {
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      /* Tabs Navigation */
+      .tabs {
+        display: flex;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 20px;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+      }
+
+      .tab.active {
+        border-bottom: 3px solid var(--primary);
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .tab:hover:not(.active) {
+        border-bottom: 3px solid var(--secondary);
+      }
+
+      /* Tab Content */
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Menu Items Grid */
+      .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+
+      .menu-item {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+      }
+
+      .menu-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu-item-img {
+        height: 180px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .menu-item-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+      }
+
+      .menu-item:hover .menu-item-img img {
+        transform: scale(1.1);
+      }
+
+      .veg-nonveg {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 8px;
+        border-radius: 3px;
+        font-size: 0.8rem;
+      }
+
+      .menu-item-details {
+        padding: 15px;
+      }
+
+      .menu-item-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+
+      .menu-item-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .menu-item-price {
+        color: var(--success);
+        font-weight: 700;
+      }
+
+      .menu-item-desc {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .menu-item-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .quantity-control {
+        display: flex;
+        align-items: center;
+      }
+
+      .quantity-btn {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #dee2e6;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .quantity-btn:hover {
+        background: var(--light);
+      }
+
+      .quantity {
+        margin: 0 10px;
+        font-weight: 600;
+      }
+
+      .add-to-cart {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+      }
+
+      .add-to-cart:hover {
+        background: var(--secondary);
+      }
+
+      /* Order Summary */
+      .order-summary {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+      }
+
+      .order-summary h2 {
+        margin-bottom: 20px;
+        color: var(--primary);
+      }
+
+      .order-items {
+        margin-bottom: 20px;
+      }
+
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .order-item:last-child {
+        border-bottom: none;
+      }
+
+      .order-item-name {
+        font-weight: 500;
+      }
+
+      .order-item-price {
+        font-weight: 600;
+      }
+
+      .order-total {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+
+      .checkout-btn {
+        width: 100%;
+        background: var(--success);
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 20px;
+      }
+
+      .checkout-btn:hover {
+        background: #00a884;
+      }
+
+      /* Room Service Form */
+      .room-service-form,
+      .reservation-form {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+
+      .submit-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .submit-btn:hover {
+        background: var(--secondary);
+      }
+
+      /* Payment Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        animation: modalFadeIn 0.3s;
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .modal-header h2 {
+        color: var(--primary);
+      }
+
+      .close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6c757d;
+      }
+
+      .payment-methods {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .payment-method {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .payment-method:hover {
+        border-color: var(--primary);
+      }
+
+      .payment-method.selected {
+        border-color: var(--primary);
+        background-color: rgba(90, 103, 216, 0.1);
+      }
+
+      .payment-method i {
+        font-size: 1.5rem;
+        margin-right: 15px;
+        color: var(--primary);
+      }
+
+      .payment-method .method-info h4 {
+        margin-bottom: 5px;
+      }
+
+      .payment-method .method-info p {
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      .pay-now-btn {
+        width: 100%;
+        background: var(--success);
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .pay-now-btn:hover {
+        background: #00a884;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .dashboard-cards {
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .menu-grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         }
+      }
 
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-        }
-
+      @media (max-width: 768px) {
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+          padding: 15px;
         }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+        .dashboard-cards {
+          grid-template-columns: 1fr;
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-        }
-
-        .logo i {
-            margin-right: 10px;
+        .menu-grid {
+          grid-template-columns: 1fr;
         }
 
         nav ul {
-            display: flex;
-            list-style: none;
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 70px;
+          left: 0;
+          width: 100%;
+          background: white;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+        }
+
+        nav ul.active {
+          display: flex;
         }
 
         nav ul li {
-            margin-left: 30px;
+          margin: 10px 0;
         }
 
-        nav ul li a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        nav ul li a:hover {
-            color: var(--primary);
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #5649c0;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        /* Food & Beverage Section */
-        .food-section {
-            margin: 40px 0;
+        .hamburger {
+          display: block;
         }
 
         .section-title {
-            font-size: 32px;
-            margin-bottom: 20px;
-            color: var(--dark);
-            position: relative;
-            display: inline-block;
+          font-size: 28px;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50px;
-            height: 4px;
-            background-color: var(--accent);
-            border-radius: 2px;
+        .modal-content {
+          width: 95%;
+          padding: 20px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .logo {
+          font-size: 20px;
         }
 
-        .food-tabs {
-            display: flex;
-            margin-bottom: 30px;
-            border-bottom: 1px solid #ddd;
+        .section-title {
+          font-size: 24px;
         }
 
-        .food-tab-btn {
-            padding: 10px 20px;
-            background: none;
-            border: none;
-            border-bottom: 3px solid transparent;
-            font-weight: 600;
-            cursor: pointer;
-            color: #777;
-            transition: all 0.3s;
+        .card-body h2 {
+          font-size: 1.5rem;
         }
 
-        .food-tab-btn.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-
-        .food-categories {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .category-btn {
-            padding: 8px 20px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-        }
-
-        .category-btn i {
-            margin-right: 8px;
-        }
-
-        .category-btn:hover, .category-btn.active {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* Menu Items Grid */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .menu-item {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-
-        .menu-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .menu-img {
-            height: 180px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .menu-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .menu-item:hover .menu-img img {
-            transform: scale(1.1);
-        }
-
-        .veg-nonveg {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-        }
-
-        .veg {
-            background-color: var(--success);
-        }
-
-        .nonveg {
-            background-color: var(--danger);
-        }
-
-        .menu-details {
-            padding: 20px;
-        }
-
-        .menu-name {
-            font-size: 18px;
-            margin-bottom: 5px;
-            color: var(--dark);
-        }
-
-        .menu-desc {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .menu-price-add {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .price {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .add-to-cart {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .add-to-cart:hover {
-            background-color: #5649c0;
-            transform: scale(1.1);
-        }
-
-        /* Cart Sidebar */
-        .cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100vh;
-            background: white;
-            box-shadow: -5px 0 30px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            z-index: 1000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .cart-sidebar.active {
-            right: 0;
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .close-cart {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: #777;
-        }
-
-        .cart-items {
-            margin-bottom: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f5f5f5;
-        }
-
-        .cart-item-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-right: 15px;
-        }
-
-        .cart-item-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .cart-item-details {
-            flex: 1;
-        }
-
-        .cart-item-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .cart-item-price {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .cart-item-actions {
-            display: flex;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        .quantity-btn {
-            width: 25px;
-            height: 25px;
-            background-color: #f5f5f5;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .quantity {
-            margin: 0 10px;
-        }
-
-        .remove-item {
-            margin-left: auto;
-            color: var(--danger);
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .cart-total {
-            padding: 20px 0;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 20px;
-        }
-
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .grand-total {
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--dark);
-        }
-
-        .checkout-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--success);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .checkout-btn:hover {
-            background-color: #00a884;
-        }
-
-        /* Table Reservation */
-        .reservation-section {
-            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
-            padding: 40px;
-            border-radius: 15px;
-            color: white;
-            margin-top: 60px;
-        }
-
-        .reservation-section .section-title {
-            color: white;
-        }
-
-        .reservation-section .section-title::after {
-            background-color: var(--accent);
-        }
-
-        .reservation-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
+        .menu-item-img {
+          height: 150px;
         }
 
         .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            font-size: 16px;
-            background-color: rgba(255,255,255,0.1);
-            color: white;
-            transition: all 0.3s;
+          font-size: 0.9rem;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: white;
-            background-color: rgba(255,255,255,0.2);
+        .btn,
+        .submit-btn,
+        .checkout-btn,
+        .pay-now-btn {
+          font-size: 0.9rem;
+          padding: 10px;
         }
-
-        .form-control::placeholder {
-            color: rgba(255,255,255,0.7);
-        }
-
-        /* Floating Cart Button */
-        .cart-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.3);
-            cursor: pointer;
-            z-index: 999;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 25px;
-            height: 25px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .menu-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .cart-sidebar {
-                width: 100%;
-                right: -100%;
-            }
-            
-            nav ul {
-                display: none;
-            }
-            
-            .reservation-form {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .menu-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-utensils"></i>
-                <span>Hospitality F&B</span>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="homepage.html">Home</a></li>
-                    <li><a href="#" class="active">Menu</a></li>
-                    <li><a href="#">Reservations</a></li>
-                    <li><a href="#">Offers</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-            <div>
-                <a href="login.html" class="btn btn-outline">Login</a>
-                <a href="signup.html" class="btn btn-primary">Sign Up</a>
-            </div>
-        </header>
-
-        <div class="food-section">
-            <h2 class="section-title">Our Menu</h2>
-            <p>Explore our delicious selection of food and beverages</p>
-            
-            <div class="food-tabs">
-                <button class="food-tab-btn active" onclick="openFoodTab('dine-in')">Dine-In Menu</button>
-                <button class="food-tab-btn" onclick="openFoodTab('room-service')">Room Service</button>
-                <button class="food-tab-btn" onclick="openFoodTab('bar')">Bar & Drinks</button>
-            </div>
-            
-            <div class="food-categories">
-                <button class="category-btn active" onclick="filterMenu('all')">
-                    <i class="fas fa-utensils"></i> All Items
-                </button>
-                <button class="category-btn" onclick="filterMenu('starters')">
-                    <i class="fas fa-apple-alt"></i> Starters
-                </button>
-                <button class="category-btn" onclick="filterMenu('main-course')">
-                    <i class="fas fa-drumstick-bite"></i> Main Course
-                </button>
-                <button class="category-btn" onclick="filterMenu('desserts')">
-                    <i class="fas fa-ice-cream"></i> Desserts
-                </button>
-                <button class="category-btn" onclick="filterMenu('beverages')">
-                    <i class="fas fa-glass-martini-alt"></i> Beverages
-                </button>
-            </div>
-            
-            <div class="menu-grid" id="menu-container">
-                <!-- Menu items will be loaded here -->
-            </div>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <a href="#" class="logo">
+          <i class="fas fa-hotel"></i>
+          <span>Hospitality</span>
+        </a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="homepage.html">Home</a></li>
+            <li><a href="hotels.html">Hotels</a></li>
+            <!-- <li><a href="checkIn.html">Check-in/out</a></li> -->
+            <li><a href="food&beverage.html" class="active">Food&Beverage</a></li>
+            <!-- <li><a href="#" aria-label="About">About</a></li> -->
+          </ul>
+        </nav>
+        <div class="auth-buttons" id="auth-buttons">
+          <a href="login.html" class="btn btn-outline">Login</a>
+          <!-- <a href="signup.html" class="btn btn-primary">Sign Up</a> -->
         </div>
-        
-        <div class="reservation-section">
-            <h2 class="section-title">Table Reservation</h2>
-            <p>Book your table in advance for a seamless dining experience</p>
-            
-            <form class="reservation-form">
-                <div class="form-group">
-                    <label for="res-name">Name</label>
-                    <input type="text" id="res-name" class="form-control" placeholder="Your Name">
-                </div>
-                <div class="form-group">
-                    <label for="res-email">Email</label>
-                    <input type="email" id="res-email" class="form-control" placeholder="Your Email">
-                </div>
-                <div class="form-group">
-                    <label for="res-date">Date</label>
-                    <input type="date" id="res-date" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="res-time">Time</label>
-                    <input type="time" id="res-time" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="res-guests">Guests</label>
-                    <select id="res-guests" class="form-control">
-                        <option value="1">1 Person</option>
-                        <option value="2">2 People</option>
-                        <option value="3">3 People</option>
-                        <option value="4">4 People</option>
-                        <option value="5+">5+ People</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="res-notes">Special Requests</label>
-                    <textarea id="res-notes" class="form-control" rows="3" placeholder="Any special requirements?"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" style="background-color: white; color: var(--primary); align-self: flex-end;">
-                    Book Table
-                </button>
-            </form>
-        </div>
-    </div>
-    
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header">
-            <h3>Your Order</h3>
-            <button class="close-cart" onclick="toggleCart()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="cart-items" id="cart-items">
-            <!-- Cart items will be loaded here -->
-        </div>
-        <div class="cart-total">
-            <div class="total-row">
-                <span>Subtotal:</span>
-                <span id="subtotal">₹0.00</span>
-            </div>
-            <div class="total-row">
-                <span>Tax (10%):</span>
-                <span id="tax">₹0.00</span>
-            </div>
-            <div class="total-row grand-total">
-                <span>Total:</span>
-                <span id="total">₹0.00</span>
-            </div>
-        </div>
-        <button class="checkout-btn" onclick="checkout()">
-            Proceed to Checkout
+        <div class="user-info" id="user-info" style="display:none;"></div>
+        <button class="hamburger">
+          <i class="fas fa-bars"></i>
         </button>
-    </div>
-    
-    <!-- Floating Cart Button -->
-    <div class="cart-btn" onclick="toggleCart()">
-        <i class="fas fa-shopping-cart"></i>
-        <span class="cart-count" id="cart-count">0</span>
-    </div>
-    
-    <script>
-        // Menu Data
-        const menuItems = [
-            {
-                id: 1,
-                name: "Paneer Tikka",
-                description: "Chunks of marinated cottage cheese grilled in a tandoor",
-                price: 150,
-                image: "./FoodImage/Paneer Tikka.jpg",
-                category: "starters",
-                veg: true
-            },
-            {
-                id: 2,
-                name: "Samosa Chaat",
-                description: "Crispy samosas topped with chutneys, yogurt, and spices",
-                price: 99,
-                image: "./FoodImage/Samosa Chaat.jpg",
-                category: "starters",
-                veg: true
-            },
-            {
-                id: 3,
-                name: "Butter Chicken",
-                description: "Tender chicken in a creamy tomato-based gravy with spices",
-                price: 290,
-                image: "./FoodImage/Butter Chicken.jpg",
-                category: "main-course",
-                veg: false
-            },
-            {
-                id: 4,
-                name: "Rogan Josh",
-                description: "Aromatic lamb curry with Kashmiri spices and yogurt",
-                price: 465,
-                image: "./FoodImage/Rogan Josh.jpg",
-                category: "main-course",
-                veg: false
-            },
-            {
-                id: 5,
-                name: "Vegetable Biryani",
-                description: "Fragrant basmati rice cooked with vegetables and spices",
-                price: 109,
-                image: "./FoodImage/Vegetable Biryani.jpg",
-                category: "main-course",
-                veg: true
-            },
-            {
-                id: 6,
-                name: "Gulab Jamun",
-                description: "Deep-fried milk balls soaked in rose-flavored sugar syrup",
-                price: 225,
-                image: "./FoodImage/Gulab Jamun.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 7,
-                name: "Rasgulla",
-                description: "Spongy white cheese balls soaked in light syrup",
-                price: 225,
-                image: "./FoodImage/Rasgulla.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 8,
-                name: "Masala Chai",
-                description: "Spiced Indian tea brewed with milk and aromatic herbs",
-                price: 129,
-                image: "./FoodImage/Masala Chai.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 9,
-                name: "Lassi",
-                description: "Refreshing yogurt-based drink, sweet or salted",
-                price: 40,
-                image: "./FoodImage/Lassi.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 10,
-                name: "Prawn Balchão",
-                description: "Fiery Goan prawn curry with vinegar and spices",
-                price: 150,
-                image: "./FoodImage/Prawn Balchão.jpg",
-                category: "main-course",
-                veg: false
-            },
-            {
-                id: 11,
-                name: "Hyderabadi Biryani",
-                description: "Layered basmati rice with marinated meat and saffron",
-                price: 230,
-                image: "./FoodImage/Hyderabadi Biryani.jpg",
-                category: "main-course",
-                veg: false
-            },
-            {
-                id: 12,
-                name: "Masala Dosa",
-                description: "Crispy dosa with spicy potato filling and chutneys",
-                price: 190,
-                image: "./FoodImage/Masala Dosa.jpg",
-                category: "main-course",
-                veg: true
-            },
-            {
-                id: 13,
-                name: "Fish Curry",
-                description: "Bengali-style fish in mustard gravy",
-                price: 85,
-                image: "./FoodImage/Fish Curry.jpg",
-                category: "main-course",
-                veg: false
-            },
-            {
-                id: 14,
-                name: "Bebinca",
-                description: "Traditional Goan layered dessert made with coconut milk",
-                price: 299,
-                image: "./FoodImage/Bebinca.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 15,
-                name: "Aam Panna",
-                description: "Refreshing raw mango cooler with mint and cumin",
-                price: 80,
-                image: "./FoodImage/Aam Panna.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 16,
-                name: "South Indian Thali",
-                description: "Rice, sambar, rasam, poriyal, curd, papadam, and sweet—all served on a banana leaf",
-                price: 160,
-                image: "./FoodImage/South Indian Thali.jpg",
-                category: "main-course",
-                veg: true
-            },
-            {
-                id: 17,
-                name: "Rajasthani Thali",
-                description: "A royal spread including dal baati churma, gatte ki sabzi, ker sangri, and more",
-                price: 120,
-                image: "./FoodImage/Rajasthani Thali.jpg",
-                category: "main-course",
-                veg: true
-            },
-            {
-                id: 18,
-                name: "Hara Bhara Kabab",
-                description: "Spinach and green pea patties seasoned with Indian spices",
-                price: 199,
-                image: "./FoodImage/Hara Bhara Kabab.jpg",
-                category: "starters",
-                veg: true
-            },
-            {
-                id: 19,
-                name: "Chicken 65",
-                description: "Spicy deep-fried chicken bites from South India",
-                price: 129,
-                image: "./FoodImage/Chicken 65.jpg",
-                category: "starters",
-                veg: false
-            },
-            {
-                id: 20,
-                name: "Aloo Tikki",
-                description: "Crispy potato patties served with chutneys",
-                price: 49,
-                image: "./FoodImage/Aloo Tikki.jpg",
-                category: "starters",
-                veg: true
-            },
-            {
-                id: 21,
-                name: "Tandoori Chicken",
-                description: "Marinated chicken legs grilled in a traditional tandoor",
-                price: 249,
-                image: "./FoodImage/Tandoori Chicken.jpg",
-                category: "starters",
-                veg: false
-            },
-            {
-                id: 22,
-                name: "Pav Bhaji Fondue",
-                description: "Mumbai-style pav bhaji served fondue-style with soft bread cubes",
-                price: 259,
-                image: "./FoodImage/Pav Bhaji Fondue.jpg",
-                category: "starters",
-                veg: true
-            },
-            {
-                id: 23,
-                name: "Fish Amritsari",
-                description: "Deep-fried fish fillets marinated with tangy spices from Punjab",
-                price: 199,
-                image: "./FoodImage/Fish Amritsari.jpg",
-                category: "starters",
-                veg: false
-            },
-            {
-                id: 24,
-                name: "Veg Manchurian",
-                description: "Fried vegetable balls in Indo-Chinese spicy sauce",
-                price: 249,
-                image: "./FoodImage/Veg Manchurian.jpg",
-                category: "starters",
-                veg: true
-            },
-            {
-                id: 25,
-                name: "Seekh Kebab",
-                description: "Minced meat skewers grilled with Indian spices",
-                price: 179,
-                image: "./FoodImage/Seekh Kebab.jpg",
-                category: "starters",
-                veg: false
-            },
-            {
-                id: 26,
-                name: "Dhokla Bites",
-                description: "Soft and spongy fermented rice-lentil cakes from Gujarat",
-                price: 79,
-                image: "./FoodImage/Dhokla Bites.jpg",
-                category: "starters",
-                veg: true
-            },
-            {
-                id: 27,
-                name: "Keema Samosa",
-                description: "Flaky pastries filled with spicy minced meat",
-                price: 29,
-                image: "./FoodImage/Keema Samosa.jpg",
-                category: "starters",
-                veg: false
-            },
-            {
-                id: 28,
-                name: "Bengali Thali",
-                description: "Rice with shorshe ilish, chholar dal, begun bhaja, mishti doi, and more",
-                price: 199,
-                image: "./FoodImage/Bengali Thali.jpg",
-                category: "main-course",
-                veg: false
-            },
-            {
-                id: 29,
-                name: "Gujarati Thali",
-                description: "Sweet and savory dishes like dhokla, undhiyu, dal, kadhi, thepla, and shrikhand",
-                price: 349,
-                image: "./FoodImage/Gujarati Thali.jpg",
-                category: "main-course",
-                veg: true
-            },
-            {
-                id: 30,
-                name: "Kerala Sadya",
-                description: "Traditional vegetarian feast with over 20 dishes served on a banana leaf",
-                price: 149,
-                image: "./FoodImage/Kerala Sadya.jpg",
-                category: "main-course",
-                veg: true
-            },
-            {
-                id: 31,
-                name: "Kaju Katli",
-                description: "Cashew fudge delicacy with a silver leaf topping",
-                price: 300,
-                image: "./FoodImage/Kaju Katli.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 32,
-                name: "Jalebi",
-                description: "Crispy golden spirals soaked in sugar syrup",
-                price: 45,
-                image: "./FoodImage/Jalebi.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 33,
-                name: "Kulfi",
-                description: "Traditional Indian ice cream with pistachio and cardamom",
-                price: 50,
-                image: "./FoodImage/Kulfi.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 34,
-                name: "Mishti Doi",
-                description: "Bengali-style sweetened yogurt set in earthen pots",
-                price: 55,
-                image: "./FoodImage/Mishti Doi.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 35,
-                name: "Gajar Halwa",
-                description: "Carrot pudding made with milk, ghee, and nuts",
-                price: 170,
-                image: "./FoodImage/Gajar Halwa.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 36,
-                name: "Payasam",
-                description: "South Indian kheer made with rice, jaggery, and coconut milk",
-                price: 250,
-                image: "./FoodImage/Payasam.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 37,
-                name: "Modak",
-                description: "Maharashtrian steamed sweet dumplings with coconut-jaggery filling",
-                price: 35,
-                image: "./FoodImage/Modak.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 38,
-                name: "Shrikhand",
-                description: "Sweet strained yogurt flavored with saffron and cardamom, topped with nuts",
-                price: 150,
-                image: "./FoodImage/Shrikhand.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 39,
-                name: "Malpua with Rabri",
-                description: "Deep-fried syrup-soaked pancakes served with thickened sweetened milk",
-                price: 100,
-                image: "./FoodImage/Malpua with Rabri.jpg",
-                category: "desserts",
-                veg: true
-            },
-            {
-                id: 40,
-                name: "Filter Coffee",
-                description: "Strong, aromatic coffee brewed with chicory and milk",
-                price: 99,
-                image: "./FoodImage/Filter Coffee.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 41,
-                name: "Kokum Sherbet",
-                description: "Refreshing coastal drink with kokum fruit and cumin",
-                price: 199,
-                image: "./FoodImage/Kokum Sherbet.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 42,
-                name: "Thandai",
-                description: "Traditional Holi drink made with milk, nuts, saffron and spices",
-                price: 179,
-                image: "./FoodImage/Thandai.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 43,
-                name: "Jaljeera",
-                description: "Spicy and tangy cumin-flavored summer cooler",
-                price: 49,
-                image: "./FoodImage/Jaljeera.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 44,
-                name: "Neer Mor",
-                description: "South Indian buttermilk tempered with mustard seeds and curry leaves",
-                price: 199,
-                image: "./FoodImage/Neer Mor.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 45,
-                name: "Tender Coconut Water",
-                description: "Fresh, naturally sweet and hydrating straight from the coconut",
-                price: 69,
-                image: "./FoodImage/Tender Coconut Water.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 46,
-                name: "Rooh Afza",
-                description: "Refreshing rose-flavored syrup drink served chilled with water or milk",
-                price: 159,
-                image: "./FoodImage/Rooh Afza.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 47,
-                name: "Sugarcane Juice",
-                description: "Freshly pressed sugarcane juice with a hint of lemon and ginger",
-                price: 69,
-                image: "./FoodImage/Sugarcane Juice.jpg",
-                category: "beverages",
-                veg: true
-            },
-            {
-                id: 48,
-                name: "Sol Kadhi",
-                description: "Konkani drink made with kokum and coconut milk, cool and digestive",
-                price: 199,
-                image: "./FoodImage/Sol Kadhi.jpg",
-                category: "beverages",
-                veg: true
-            }
-        ];
+      </div>
+    </header>
 
-        // Cart Data
-        let cart = [];
-        
-        // Load Menu Items
-        function loadMenuItems(category = 'all') {
-            const menuContainer = document.getElementById('menu-container');
-            menuContainer.innerHTML = '';
-            
-            const filteredItems = category === 'all' 
-                ? menuItems 
-                : menuItems.filter(item => item.category === category);
-            
-            filteredItems.forEach(item => {
-                const menuItem = document.createElement('div');
-                menuItem.className = 'menu-item';
-                menuItem.innerHTML = `
-                    <div class="menu-img">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="veg-nonveg ${item.veg ? 'veg' : 'nonveg'}">
-                            ${item.veg ? 'V' : 'NV'}
-                        </div>
+    <main>
+      <div class="container">
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <div class="card-header">
+              <h3>Today's Orders</h3>
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="card-body">
+              <h2>47</h2>
+              <p>+12% from yesterday</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Revenue</h3>
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="card-body">
+              <h2>₹12,450</h2>
+              <p>+8% from yesterday</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3>Active Orders</h3>
+              <i class="fas fa-concierge-bell"></i>
+            </div>
+            <div class="card-body">
+              <h2>12</h2>
+              <p>Currently being prepared</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Digital Menu Tab Content -->
+        <div class="tab-content active" id="digital-menu">
+          <h2 class="section-title">Digital Menu</h2>
+
+          <div class="tabs">
+            <div class="tab active" data-category="all">All Items</div>
+            <div class="tab" data-category="starters">Starters</div>
+            <div class="tab" data-category="main-course">Main Course</div>
+            <div class="tab" data-category="desserts">Desserts</div>
+            <div class="tab" data-category="beverages">Beverages</div>
+          </div>
+
+          <div class="menu-grid" id="menu-container">
+            <!-- Menu items will be dynamically inserted here -->
+          </div>
+
+          <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="order-items" id="order-items">
+              <div class="empty-cart">
+                <p>Your cart is empty</p>
+              </div>
+            </div>
+            <div class="order-total">
+              <span>Total:</span>
+              <span id="order-total">₹0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">
+              Proceed to Order
+            </button>
+          </div>
+        </div>
+
+        <!-- Room Service Tab Content -->
+        <div class="tab-content" id="room-service">
+          <h2 class="section-title">Room Service Management</h2>
+
+          <div class="room-service-form">
+            <div class="form-group">
+              <label for="room-number">Room Number</label>
+              <input
+                type="text"
+                id="room-number"
+                class="form-control"
+                placeholder="Enter room number"
+              />
+            </div>
+            <div class="form-group">
+              <label for="guest-name">Guest Name</label>
+              <input
+                type="text"
+                id="guest-name"
+                class="form-control"
+                placeholder="Enter guest name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="service-type">Service Type</label>
+              <select id="service-type" class="form-control">
+                <option value="">Select service type</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="snacks">Snacks</option>
+                <option value="beverages">Beverages</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="special-requests">Special Requests</label>
+              <textarea
+                id="special-requests"
+                class="form-control"
+                rows="3"
+                placeholder="Any special requests?"
+              ></textarea>
+            </div>
+            <button class="submit-btn">Submit Request</button>
+          </div>
+
+          <div class="active-requests" style="margin-top: 30px">
+            <h3>Active Room Service Requests</h3>
+            <div id="room-service-requests">
+              <p>No active requests at the moment</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reservations Tab Content -->
+        <div class="tab-content" id="reservations">
+          <h2 class="section-title">Book a Reservation</h2>
+
+          <div class="reservation-form">
+            <div class="form-group">
+              <label for="reservation-name">Name</label>
+              <input
+                type="text"
+                id="reservation-name"
+                class="form-control"
+                placeholder="Enter your name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="reservation-date">Date</label>
+              <input type="date" id="reservation-date" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="reservation-time">Time</label>
+              <input
+                type="time"
+                id="reservation-time"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="party-size">Party Size</label>
+              <input
+                type="number"
+                id="party-size"
+                class="form-control"
+                placeholder="Number of guests"
+                min="1"
+              />
+            </div>
+            <div class="form-group">
+              <label for="reservation-contact">Contact Number</label>
+              <input
+                type="tel"
+                id="reservation-contact"
+                class="form-control"
+                placeholder="Enter contact number"
+              />
+            </div>
+            <div class="form-group">
+              <label for="reservation-requests">Special Requests</label>
+              <textarea
+                id="reservation-requests"
+                class="form-control"
+                rows="3"
+                placeholder="Any special requests?"
+              ></textarea>
+            </div>
+            <button class="submit-btn" id="reservation-submit">
+              Submit Reservation
+            </button>
+          </div>
+
+          <div class="active-reservations" style="margin-top: 30px">
+            <h3>Active Reservations</h3>
+            <div id="reservation-requests">
+              <p>No active reservations at the moment</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="payment-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Payment Method</h2>
+          <button class="close-modal">×</button>
+        </div>
+        <div class="payment-methods">
+          <div class="payment-method selected">
+            <i class="fas fa-money-bill-wave"></i>
+            <div class="method-info">
+              <h4>Cash on Delivery</h4>
+              <p>Pay when your order arrives</p>
+            </div>
+          </div>
+        </div>
+        <button class="pay-now-btn" id="pay-now-btn">Confirm Order</button>
+      </div>
+    </div>
+
+    <script>
+      // Shopping cart
+      let cart = [];
+      let roomServiceRequests = [];
+      let reservations = [];
+
+      // DOM Elements
+      const menuContainer = document.getElementById("menu-container");
+      const orderItems = document.getElementById("order-items");
+      const orderTotal = document.getElementById("order-total");
+      const checkoutBtn = document.getElementById("checkout-btn");
+      const paymentModal = document.getElementById("payment-modal");
+      const closeModal = document.querySelector(".close-modal");
+      const payNowBtn = document.getElementById("pay-now-btn");
+      const tabs = document.querySelectorAll(".tab");
+      const navLinks = document.querySelectorAll("nav ul li a");
+      const tabContents = document.querySelectorAll(".tab-content");
+      const roomServiceForm = document.querySelector(".room-service-form");
+      const reservationForm = document.querySelector(".reservation-form");
+      const roomServiceRequestsContainer = document.getElementById(
+        "room-service-requests"
+      );
+      const reservationRequestsContainer = document.getElementById(
+        "reservation-requests"
+      );
+      const hamburger = document.querySelector(".hamburger");
+      const nav = document.querySelector("nav ul");
+
+      // Initialize the page
+      async function init() {
+        await fetchMenuItems();
+        setupEventListeners();
+      }
+
+      // Fetch menu items from backend
+      async function fetchMenuItems() {
+        try {
+          const response = await fetch("http://localhost:3000/api/menu");
+          const menuItems = await response.json();
+          console.log("Menu items:", menuItems); // Debug log
+          renderMenuItems(menuItems, "all");
+        } catch (error) {
+          console.error("Error fetching menu items:", error);
+          alert("Failed to load menu items. Please try again later.");
+        }
+      }
+
+      // Render menu items based on category
+      function renderMenuItems(menuItems, category) {
+        menuContainer.innerHTML = "";
+
+        const filteredItems =
+          category === "all"
+            ? menuItems
+            : menuItems.filter((item) => item.category === category);
+
+        filteredItems.forEach((item) => {
+          const menuItem = document.createElement("div");
+          menuItem.className = "menu-item";
+          menuItem.dataset.id = item.id;
+          menuItem.innerHTML = `
+            <div class="menu-item-img">
+                <img src="${item.image}" alt="${item.name}">
+                <div class="veg-nonveg ${item.veg ? "veg" : "nonveg"}">
+                    ${item.veg ? "V" : "NV"}
+                </div>
+            </div>
+            <div class="menu-item-details">
+                <div class="menu-item-header">
+                    <div class="menu-item-title">${item.name}</div>
+                    <div class="menu-item-price">₹${parseFloat(
+                      item.price
+                    ).toFixed(2)}</div>
+                </div>
+                <div class="menu-item-desc">${item.description}</div>
+                <div class="menu-item-actions">
+                    <div class="quantity-control">
+                        <button class="quantity-btn minus">-</button>
+                        <span class="quantity">1</span>
+                        <button class="quantity-btn plus">+</button>
                     </div>
-                    <div class="menu-details">
-                        <h3 class="menu-name">${item.name}</h3>
-                        <p class="menu-desc">${item.description}</p>
-                        <div class="menu-price-add">
-                            <div class="price">₹${item.price.toFixed(2)}</div>
-                            <button class="add-to-cart" onclick="addToCart(${item.id})">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        `;
+          menuContainer.appendChild(menuItem);
+        });
+      }
+      // Update the cart display
+      function updateCart() {
+        orderItems.innerHTML = "";
+
+        if (cart.length === 0) {
+          orderItems.innerHTML =
+            '<div class="empty-cart"><p>Your cart is empty</p></div>';
+          orderTotal.textContent = "₹0.00";
+          checkoutBtn.disabled = true;
+          return;
+        }
+
+        let total = 0;
+
+        cart.forEach((item) => {
+          const cartItem = document.createElement("div");
+          cartItem.className = "order-item";
+          cartItem.innerHTML = `
+                    <div class="order-item-name">${item.name} x${
+            item.quantity
+          }</div>
+                    <div class="order-item-price">₹${(
+                      item.price * item.quantity
+                    ).toFixed(2)}</div>
                 `;
-                menuContainer.appendChild(menuItem);
+          orderItems.appendChild(cartItem);
+
+          total += item.price * item.quantity;
+        });
+
+        orderTotal.textContent = `₹${total.toFixed(2)}`;
+        checkoutBtn.disabled = false;
+      }
+
+      // Add item to cart
+      function addToCart(itemId, quantity) {
+        const menuItem = cart.find((item) => item.id === itemId);
+
+        if (menuItem) {
+          menuItem.quantity += quantity;
+        } else {
+          fetch(`http://localhost:3000/api/menu/${itemId}`)
+            .then((response) => response.json())
+            .then((menuItem) => {
+              cart.push({
+                id: menuItem.id,
+                name: menuItem.name,
+                price: menuItem.price,
+                quantity: quantity,
+              });
+              updateCart();
             });
         }
-        
-        // Filter Menu by Category
-        function filterMenu(category) {
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            loadMenuItems(category);
-        }
-        
-        // Food Tab Switching
-        function openFoodTab(tabName) {
-            document.querySelectorAll('.food-tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            // In a real app, you would load different menus here
-        }
-        
-        // Cart Functions
-        function addToCart(itemId) {
-            const item = menuItems.find(i => i.id === itemId);
-            const existingItem = cart.find(i => i.id === itemId);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    ...item,
-                    quantity: 1
-                });
-            }
-            
-            updateCart();
-            showCartNotification();
-        }
-        
-        function removeFromCart(itemId) {
-            cart = cart.filter(item => item.id !== itemId);
-            updateCart();
-        }
-        
-        function updateQuantity(itemId, newQuantity) {
-            const item = cart.find(i => i.id === itemId);
-            if (item) {
-                item.quantity = newQuantity;
-                if (item.quantity < 1) {
-                    removeFromCart(itemId);
-                } else {
-                    updateCart();
-                }
-            }
-        }
-        
-        function updateCart() {
-            const cartItems = document.getElementById('cart-items');
-            const cartCount = document.getElementById('cart-count');
-            const subtotal = document.getElementById('subtotal');
-            const tax = document.getElementById('tax');
-            const total = document.getElementById('total');
-            
-            cartItems.innerHTML = '';
-            
-            let calculatedSubtotal = 0;
-            
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                calculatedSubtotal += itemTotal;
-                
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <div class="cart-item-img">
-                        <img src="${item.image}" alt="${item.name}">
-                    </div>
-                    <div class="cart-item-details">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
-                        <div class="cart-item-actions">
-                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <span class="quantity">${item.quantity}</span>
-                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                            <button class="remove-item" onclick="removeFromCart(${item.id})">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                cartItems.appendChild(cartItem);
-            });
-            
-            const calculatedTax = calculatedSubtotal * 0.1;
-            const calculatedTotal = calculatedSubtotal + calculatedTax;
-            
-            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-            subtotal.textContent = `₹${calculatedSubtotal.toFixed(2)}`;
-            tax.textContent = `₹${calculatedTax.toFixed(2)}`;
-            total.textContent = `₹${calculatedTotal.toFixed(2)}`;
-        }
-        
-        function toggleCart() {
-            document.getElementById('cart-sidebar').classList.toggle('active');
-        }
-        
-        function showCartNotification() {
-            const cartBtn = document.querySelector('.cart-btn');
-            cartBtn.classList.add('pulse');
-            setTimeout(() => {
-                cartBtn.classList.remove('pulse');
-            }, 500);
-        }
-        
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-            alert(`Order placed successfully! Total: ${document.getElementById('total').textContent}`);
+
+        updateCart();
+      }
+
+      // Submit order
+      async function submitOrder() {
+        try {
+          const response = await fetch("http://localhost:3000/api/orders", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              items: cart,
+              total: parseFloat(orderTotal.textContent.replace("₹", "")),
+              payment_method: "Cash on Delivery",
+              status: "Pending",
+            }),
+          });
+
+          if (response.ok) {
+            alert("Order placed successfully! You will pay cash on delivery.");
             cart = [];
             updateCart();
-            toggleCart();
+            paymentModal.style.display = "none";
+          } else {
+            alert("Failed to place order. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error submitting order:", error);
+          alert("An error occurred. Please try again later.");
         }
-        
-        // Initialize Page
-        window.onload = function() {
-            loadMenuItems();
+      }
+
+      // Submit room service request
+      async function submitRoomServiceRequest(e) {
+        e.preventDefault();
+
+        const roomNumber = document.getElementById("room-number").value;
+        const guestName = document.getElementById("guest-name").value;
+        const serviceType = document.getElementById("service-type").value;
+        const specialRequests =
+          document.getElementById("special-requests").value;
+
+        if (!roomNumber || !guestName || !serviceType) {
+          alert("Please fill in all required fields");
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/room-service",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                room_number: roomNumber,
+                guest_name: guestName,
+                service_type: serviceType,
+                special_requests: specialRequests,
+                status: "Pending",
+              }),
+            }
+          );
+
+          if (response.ok) {
+            const request = await response.json();
+            roomServiceRequests.push(request);
+            updateRoomServiceRequests();
+            roomServiceForm.reset();
+            alert("Room service request submitted successfully!");
+          } else {
+            alert("Failed to submit request. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error submitting room service request:", error);
+          alert("An error occurred. Please try again later.");
+        }
+      }
+
+      // Submit reservation
+      async function submitReservation(e) {
+        e.preventDefault();
+
+        const name = document.getElementById("reservation-name").value;
+        const date = document.getElementById("reservation-date").value;
+        const time = document.getElementById("reservation-time").value;
+        const partySize = document.getElementById("party-size").value;
+        const contact = document.getElementById("reservation-contact").value;
+        const specialRequests = document.getElementById(
+          "reservation-requests"
+        ).value;
+
+        if (!name || !date || !time || !partySize || !contact) {
+          alert("Please fill in all required fields");
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api/reservations",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name,
+                date,
+                time,
+                party_size: parseInt(partySize),
+                contact,
+                special_requests: specialRequests,
+                status: "Pending",
+              }),
+            }
+          );
+
+          if (response.ok) {
+            const reservation = await response.json();
+            reservations.push(reservation);
+            updateReservations();
+            reservationForm.reset();
+            alert("Reservation submitted successfully!");
+          } else {
+            alert("Failed to submit reservation. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error submitting reservation:", error);
+          alert("An error occurred. Please try again later.");
+        }
+      }
+
+      // Update room service requests display
+      function updateRoomServiceRequests() {
+        if (roomServiceRequests.length === 0) {
+          roomServiceRequestsContainer.innerHTML =
+            "<p>No active requests at the moment</p>";
+          return;
+        }
+
+        let html =
+          '<div style="overflow-x: auto;"><table style="width: 100%; border-collapse: collapse;">';
+        html += `
+                <thead>
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Room No.</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Guest Name</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Service Type</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+
+        roomServiceRequests.forEach((request) => {
+          html += `
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 12px;">${request.room_number}</td>
+                        <td style="padding: 12px;">${request.guest_name}</td>
+                        <td style="padding: 12px;">${request.service_type}</td>
+                        <td style="padding: 12px;">${new Date(
+                          request.created_at
+                        ).toLocaleTimeString()}</td>
+                        <td style="padding: 12px;">
+                            <span style="padding: 4px 8px; border-radius: 4px; background-color: ${
+                              request.status === "Pending"
+                                ? "#f6e05e"
+                                : "#48bb78"
+                            }; color: ${
+            request.status === "Pending" ? "#744210" : "#22543d"
+          };">
+                                ${request.status}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+        });
+
+        html += "</tbody></table></div>";
+        roomServiceRequestsContainer.innerHTML = html;
+      }
+
+      // Update reservations display
+      function updateReservations() {
+        if (reservations.length === 0) {
+          reservationRequestsContainer.innerHTML =
+            "<p>No active reservations at the moment</p>";
+          return;
+        }
+
+        let html =
+          '<div style="overflow-x: auto;"><table style="width: 100%; border-collapse: collapse;">';
+        html += `
+                <thead>
+                    <tr style="background-color: #f8f9fa;">
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Name</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Date</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Time</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Party Size</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+
+        reservations.forEach((reservation) => {
+          html += `
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 12px;">${reservation.name}</td>
+                        <td style="padding: 12px;">${reservation.date}</td>
+                        <td style="padding: 12px;">${reservation.time}</td>
+                        <td style="padding: 12px;">${
+                          reservation.party_size
+                        }</td>
+                        <td style="padding: 12px;">
+                            <span style="padding: 4px 8px; border-radius: 4px; background-color: ${
+                              reservation.status === "Pending"
+                                ? "#f6e05e"
+                                : "#48bb78"
+                            }; color: ${
+            reservation.status === "Pending" ? "#744210" : "#22543d"
+          };">
+                                ${reservation.status}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+        });
+
+        html += "</tbody></table></div>";
+        reservationRequestsContainer.innerHTML = html;
+      }
+
+      // Setup event listeners
+      function setupEventListeners() {
+        // Tab switching
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", async () => {
+            tabs.forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            const category = tab.dataset.category;
+            if (category) {
+              const response = await fetch("http://localhost:3000/api/menu");
+              const menuItems = await response.json();
+              renderMenuItems(menuItems, category);
+            }
+          });
+        });
+
+        // Navigation tab switching
+        navLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            if (link.dataset.tab) {
+              e.preventDefault();
+              navLinks.forEach((l) => l.classList.remove("active"));
+              link.classList.add("active");
+
+              const tabId = link.dataset.tab;
+              tabContents.forEach((content) =>
+                content.classList.remove("active")
+              );
+              document.getElementById(tabId).classList.add("active");
+            }
+          });
+        });
+
+        // Menu grid events (delegated)
+        menuContainer.addEventListener("click", (e) => {
+          const menuItem = e.target.closest(".menu-item");
+          if (!menuItem) return;
+
+          const itemId = parseInt(menuItem.dataset.id);
+
+          // Handle quantity buttons
+          if (e.target.classList.contains("quantity-btn")) {
+            const quantityElement = menuItem.querySelector(".quantity");
+            let quantity = parseInt(quantityElement.textContent);
+
+            if (e.target.classList.contains("minus") && quantity > 1) {
+              quantity--;
+            } else if (e.target.classList.contains("plus")) {
+              quantity++;
+            }
+
+            quantityElement.textContent = quantity;
+          }
+
+          // Handle add to cart button
+          if (e.target.classList.contains("add-to-cart")) {
+            const quantity = parseInt(
+              menuItem.querySelector(".quantity").textContent
+            );
+            addToCart(itemId, quantity);
+
+            // Show feedback
+            const btn = e.target;
+            btn.textContent = "Added!";
+            setTimeout(() => {
+              btn.textContent = "Add to Cart";
+            }, 1000);
+          }
+        });
+
+        // Checkout button
+        checkoutBtn.addEventListener("click", () => {
+          paymentModal.style.display = "flex";
+        });
+
+        // Payment modal
+        closeModal.addEventListener("click", () => {
+          paymentModal.style.display = "none";
+        });
+
+        // Confirm order
+        payNowBtn.addEventListener("click", submitOrder);
+
+        // Close modal when clicking outside
+        window.addEventListener("click", (e) => {
+          if (e.target === paymentModal) {
+            paymentModal.style.display = "none";
+          }
+        });
+
+        // Room service form submission
+        roomServiceForm.addEventListener("submit", submitRoomServiceRequest);
+
+        // Reservation form submission
+        reservationForm.addEventListener("submit", submitReservation);
+
+        // Hamburger menu toggle
+        hamburger.addEventListener("click", () => {
+          nav.classList.toggle("active");
+        });
+      }
+
+      // Initialize the application
+      document.addEventListener("DOMContentLoaded", init);
+
+      // User authentication and activity display
+      const user = JSON.parse(localStorage.getItem('user'));
+      const authButtons = document.getElementById('auth-buttons');
+      const userInfo = document.getElementById('user-info');
+      if (user) {
+        authButtons.style.display = 'none';
+        userInfo.style.display = 'block';
+        userInfo.innerHTML = `<span>Welcome, ${user.fullname || user.email}</span> <a href="#" id="logout" class="btn btn-outline" style="margin-left:10px;">Logout</a>`;
+        document.getElementById('logout').onclick = function() {
+          localStorage.removeItem('user');
+          window.location.reload();
         };
+        // Show user-specific orders/reservations (for demo, just show a message)
+        document.querySelector('.order-summary').innerHTML += '<div style="margin-top:20px;"><strong>Your recent orders will appear here.</strong></div>';
+      } else {
+        authButtons.style.display = 'block';
+        userInfo.style.display = 'none';
+      }
     </script>
-</body>
+  </body>
 </html>
